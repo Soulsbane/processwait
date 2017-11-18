@@ -6,3 +6,6 @@ targetType "library"
 configuration "library" {
 	targetType "library"
 }
+
+dependency "simpletimers" version="*"
+dependency "progress" version="~>4.0.3"
