@@ -1,0 +1,8 @@
+name "processwait"
+description "Simple progress bar while waiting for an application to finish.."
+copyright "Copyright © 2017"
+authors "Paul Crane"
+targetType "library"
+configuration "library" {
+	targetType "library"
+}
