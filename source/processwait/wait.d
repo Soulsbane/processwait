@@ -3,9 +3,9 @@ module processwait.wait;
 import std.process;
 import core.time;
 
-import progress.spinner;
+public import progress.spinner;
 import simpletimers.repeating;
-
+// TODO: Fix/Add documentation.
 /**
 	A simple wrapper around ProcessWait.
 
@@ -32,6 +32,11 @@ class ProcessWait(SpinnerType) : RepeatingTimer
 		spinner_.message = { return "Loading "; };
 	}
 
+	void setUpdateFrequency(Duration frequency = dur!("msecs")(250))
+	{
+		frequency_ = frequency;
+	}
+
 	/**
 		Executes an process that will wait using a progress indicator until the process exits.
 
@@ -44,7 +49,7 @@ class ProcessWait(SpinnerType) : RepeatingTimer
 	auto execute(const string[] args...)
 	{
 		auto pipes = pipeProcess(args);
-		start(dur!("msecs")(250));
+		start(frequency_);
 
 		immutable auto exitStatus = wait(pipes.pid);
 		stop();
@@ -59,4 +64,5 @@ class ProcessWait(SpinnerType) : RepeatingTimer
 	}
 private:
 	SpinnerType spinner_;
+	Duration frequency_ = dur!("msecs")(250);
 }
