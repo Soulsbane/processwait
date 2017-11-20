@@ -15,19 +15,20 @@ import simpletimers.repeating;
 		Returns:
 			The same value as $(LINK2 http://dlang.org/phobos/std_process.html#.wait, std.process.wait).
 */
-auto waitForApplication(const size_t phaseType, const string[] args...)
+auto waitForApplication(SpinnerType = Spinner)(const string[] args...)
 {
-	auto process = new ProcessWait;
-	immutable auto exitStatus = process.execute(phaseType, args);
+	auto process = new ProcessWait!SpinnerType;
+	immutable auto exitStatus = process.execute(args);
 
 	return exitStatus;
 }
 
-class ProcessWait : RepeatingTimer
+// Available spinners, Spinner(default), PieSpinner, MoonSpinner and LineSpinner.
+class ProcessWait(SpinnerType) : RepeatingTimer
 {
 	this()
 	{
-		spinner_ = new Spinner();
+		spinner_ = new SpinnerType();
 		spinner_.message = { return "Loading "; };
 	}
 
@@ -40,7 +41,7 @@ class ProcessWait : RepeatingTimer
 		Returns:
 			The same value as $(LINK2 http://dlang.org/phobos/std_process.html#.wait, std.process.wait).
 	*/
-	auto execute(const size_t phaseType, const string[] args...)
+	auto execute(const string[] args...)
 	{
 		auto pipes = pipeProcess(args);
 		start(dur!("msecs")(250));
@@ -57,5 +58,5 @@ class ProcessWait : RepeatingTimer
 		spinner_.next();
 	}
 private:
-	Spinner spinner_;
+	SpinnerType spinner_;
 }
