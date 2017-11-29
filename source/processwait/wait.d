@@ -1,3 +1,6 @@
+/**
+	Provides various functions/classes for displaying an animation while waiting for the process to complete.
+*/
 module processwait.wait;
 
 import std.process;
@@ -5,7 +8,6 @@ import core.time;
 
 public import progress.spinner;
 import simpletimers.repeating;
-// TODO: Fix/Add documentation.
 /**
 	A simple wrapper around ProcessWait.
 
@@ -23,7 +25,8 @@ auto waitForApplication(SpinnerType = Spinner)(const string[] args...)
 	return exitStatus;
 }
 
-// Available spinners, Spinner(default), PieSpinner, MoonSpinner and LineSpinner.
+/// Display an animation while waiting for the process to complete. Available spinners, Spinner(default), PieSpinner,
+/// MoonSpinner and LineSpinner.
 class ProcessWait(SpinnerType) : RepeatingTimer
 {
 	this()
@@ -32,6 +35,12 @@ class ProcessWait(SpinnerType) : RepeatingTimer
 		spinner_.message = { return "Loading "; };
 	}
 
+	/**
+		Sets the frequency in which the spinner animation should change.
+
+		Params:
+			frequency = The frequency in which the spinner animation should change.
+	*/
 	void setUpdateFrequency(Duration frequency = dur!("msecs")(250))
 	{
 		frequency_ = frequency;
