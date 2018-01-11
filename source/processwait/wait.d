@@ -55,12 +55,12 @@ class ProcessWait(SpinnerType) : RepeatingTimer
 		Returns:
 			The same value as $(LINK2 http://dlang.org/phobos/std_process.html#.wait, std.process.wait).
 	*/
-	auto execute(const string[] args...)
+	int execute(const string[] args...)
 	{
 		auto pipes = pipeProcess(args);
 		start(frequency_);
 
-		immutable auto exitStatus = wait(pipes.pid);
+		immutable int exitStatus = wait(pipes.pid);
 		stop();
 		spinner_.finish();
 
