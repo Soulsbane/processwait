@@ -17,10 +17,10 @@ import simpletimers.repeating;
 		Returns:
 			The same value as $(LINK2 http://dlang.org/phobos/std_process.html#.wait, std.process.wait).
 */
-auto waitForApplication(SpinnerType = Spinner)(const string[] args...)
+int waitForApplication(SpinnerType = Spinner)(const string[] args...)
 {
 	auto process = new ProcessWait!SpinnerType;
-	immutable auto exitStatus = process.execute(args);
+	immutable int exitStatus = process.execute(args);
 
 	return exitStatus;
 }
