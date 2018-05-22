@@ -7,3 +7,5 @@ __dummy.html
 __test__library__
 processwait-test-library
 processwait-test-unittest
+*docs
+.vscode
